@@ -1,8 +1,29 @@
-# -*- coding: utf-8 -*-
+#/usr/bin/python
+
+# Copyright (C) 2025 Dmitry Tretyakov <tinelix@mail.ru>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 from SocketServer import BaseRequestHandler, TCPServer
 import string
 from rws import HTTPPage, HTTPHeaders
+
+# RetroWebServer is a self-written HTTP server based on SocketServer from Python 1.5 and 2.0. 
+# Guaranteed to work on Windows 3.1.
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Since all this is developed on the ancient Python versions, of cource, there may be any
+# vulnerabillity that were elimanated in subsequent versions, so we do not recommend using the 
+# implementation on an ongoing basis (only if you do not start Python in Win2K and above).
 
 class RetroHTTPHandler(BaseRequestHandler):
     def handle(self):
