@@ -1,0 +1,39 @@
+class HTTPHeaders:
+	httpVersion = "1.1"
+	status = 200
+	raw = ""
+	status_desc = ""
+	
+	def __init__(self, status):
+		self.status = status
+		self.generateHeaders()
+		
+	def __init__(self, httpVersion, status):
+		self.httpVersion = httpVersion
+		self.status = status
+		self.generateHeaders()
+		
+	def getStatusDescription(self):
+		self.status_desc = {
+			200: "OK", 
+			400: "Bad Request", 
+			401: "Unauthorized", 
+			402: "Payment Required", 
+			403: "Forbidden", 
+			404: "Not Found", 
+			405: "Method Not Allowed", 
+			406: "Not Acceptable"
+		}
+		
+	def generateHeaders(self):
+		self.raw = """\
+HTTP/%s %d %s\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n""" % (
+									self.httpVersion, 
+									self.status, 
+									self.status_desc
+						)
+	def toRaw(self):
+		print "Response Headers", self.raw
+		return self.raw
+		
+	
