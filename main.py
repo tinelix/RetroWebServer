@@ -31,14 +31,15 @@ class RetroHTTPHandler(BaseRequestHandler):
         if len(self.data) > 0:
             print "Request:", repr(self.data[:100])
 
+            # This is example HTML page, wrapped in a HTTPPage class object
             response = HTTPPage(
                 HTTPHeaders("1.1", 200), 
                 "<HTML>\
                 <BODY>\
-                <H1>Hello World from Windows 3.1!</H1>\
+                <H1>Hello World!</H1>\
                 </BODY>\
                 </HTML>"
-            ).toRaw()
+            ).toRaw() 
             
             self.request.send(response)
 
@@ -46,4 +47,5 @@ if __name__ == "__main__":
     HOST, PORT = '', 80
     server = TCPServer((HOST, PORT), RetroHTTPHandler)
     print "Listening at %s:%d" % (HOST, PORT)
+    # Ctrl+C stops server
     server.serve_forever()
