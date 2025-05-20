@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 
 # Copyright (C) 2025 Dmitry Tretyakov <tinelix@mail.ru>
 #
