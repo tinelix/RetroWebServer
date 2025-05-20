@@ -47,7 +47,6 @@ HTTP/%s %d %s\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n""" % (
 									self.status_desc
 						)
 	def toRaw(self):
-		print "Response Headers", self.raw
 		return self.raw
 		
 	
