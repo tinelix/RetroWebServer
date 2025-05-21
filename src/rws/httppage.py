@@ -17,15 +17,19 @@ from httphds import HTTPHeaders
 class HTTPPage:	
 
 	response = ""
+	html = ""
 
 	def __init__(self, headers, html):
 		self.headers = headers
-		self.html = self.generateHTML(html)
+		self.html = HTTPPage.generateHTML(self)
 		self.response = """%s%s""" % (self.headers.toRaw(), self.html)
+
+	def createInstance(headers, html):
+		return HTTPPage(headers, html)
 		
-	def generateHTML(self, html):
-		html = "%s\r\n" % html
-		return html
+	def generateHTML(self):
+		self.html = "%s\r\n" % self.html
+		return self.html
 		
 	def toRaw(self):
 		return self.response

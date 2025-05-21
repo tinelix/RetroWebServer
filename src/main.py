@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from SocketServer import BaseRequestHandler, TCPServer
+import sys
 import string
-from rws import HTTPPage, HTTPHeaders
 
 # RetroWebServer is a self-written HTTP server based on SocketServer 
 # from Python 1.5 and 2.0. 
@@ -27,27 +26,41 @@ from rws import HTTPPage, HTTPHeaders
 # not documented, so we do NOT recommend using the implementation on a permanent 
 # basis (ONLY if you are using Python on Win2K and above).
 
-class RetroHTTPHandler(BaseRequestHandler):
-    def handle(self):
-        self.data = self.request.recv(1024)
-        if len(self.data) > 0:
-            print "Request:", repr(self.data[:100])
+if sys.version >= (1, 5):
+	from SocketServer import BaseRequestHandler, TCPServer
+	from rws import *
+else:
+	sys.path.append("./rws")
+	from SocketSe import BaseRequestHandler, TCPServer
+	from httperrp import HTTPErrorPage
+	from httphds import HTTPHeaders
+	from httppage import HTTPPage
+	from website import Website
+	from version import RWSVersion
 
-            # This is example HTML page, wrapped in a HTTPPage class object
-            response = HTTPPage(
-                HTTPHeaders("1.1", 200), 
-                "<HTML>\
-                <BODY>\
-                <H1>Hello World!</H1>\
-                </BODY>\
-                </HTML>"
-            ).toRaw() 
+class RetroHTTPHandler(BaseRequestHandler):
+	def handle(self):
+        	self.data = self.request.recv(1024)
+        	if len(self.data) > 0:
+            		print "Request:", repr(self.data[:100])
+
+            		content = Website("localhost", 80).getContentByFile("index.html")
             
-            self.request.send(response)
+	    		if content == None:
+                			response = HTTPErrorPage(
+                    				HTTPHeaders("1.1", "text/html", 400)
+                			).toRaw()
+            		else:
+                			response = HTTPPage(
+                    				HTTPHeaders("1.1", "text/html", 200), 
+                    				content
+                			).toRaw()
+            
+            	self.request.send(response)
 
 if __name__ == "__main__":
-    HOST, PORT = '', 80
-    server = TCPServer((HOST, PORT), RetroHTTPHandler)
-    print "Listening at %s:%d" % (HOST, PORT)
-    # Ctrl+C stops server
-    server.serve_forever()
+    	HOST, PORT = '', 80
+    	server = TCPServer((HOST, PORT), RetroHTTPHandler)
+    	print "Listening at %s:%d" % (HOST, PORT)
+    	# Ctrl+C stops server
+    	server.serve_forever()

@@ -15,6 +15,7 @@
 class HTTPHeaders:
 	httpVersion = "1.1"
 	status = 200
+	mimeType = "text/html"
 	raw = ""
 	status_desc = ""
 	
@@ -25,6 +26,12 @@ class HTTPHeaders:
 	def __init__(self, httpVersion, status):
 		self.httpVersion = httpVersion
 		self.status = status
+		self.generateHeaders()
+		
+	def __init__(self, httpVersion, mimeType, status):
+		self.httpVersion = httpVersion
+		self.status = status
+		self.mimeType = mimeType
 		self.generateHeaders()
 		
 	def getStatusDescription(self):
@@ -38,13 +45,15 @@ class HTTPHeaders:
 			405: "Method Not Allowed", 
 			406: "Not Acceptable"
 		}
+		return self.status_desc[self.status]
 		
 	def generateHeaders(self):
 		self.raw = """\
-HTTP/%s %d %s\r\nContent-Type: text/html\r\nConnection: close\r\n\r\n""" % (
+HTTP/%s %d %s\r\nContent-Type: %s\r\nConnection: close\r\n\r\n""" % (
 									self.httpVersion, 
 									self.status, 
-									self.status_desc
+									self.getStatusDescription(), 
+									self.mimeType
 						)
 	def toRaw(self):
 		return self.raw
