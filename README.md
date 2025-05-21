@@ -1,5 +1,5 @@
 # RetroWebServer
-RetroWebServer is a self-written HTTP server based on SocketServer library from Python 1.5 and 2.0. 
+RetroWebServer is a self-written HTTP server based on SocketServer library. Compatible with Python 1.x and 2.0. 
 
 _Guaranteed to work on Windows 3.1._
 
