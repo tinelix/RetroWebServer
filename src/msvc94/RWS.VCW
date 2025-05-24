@@ -1,0 +1,12 @@
+
+[MSVC Status File]
+Version=1.00
+ProjectType=10
+External=1
+DebugBuildCmd=NMAKE /f RWS.MAK
+ReleaseBuildCmd=NMAKE /f RWS.MAK
+RebuildOption=/a
+BuildMode=1
+TargetName=D:\USERS\TRETDM\SOURCES\RETROW~1\RWS.EXE
+BrkptCount=0
+WatchCount=0
